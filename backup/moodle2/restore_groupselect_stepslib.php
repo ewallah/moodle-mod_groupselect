@@ -36,7 +36,7 @@ class restore_groupselect_activity_structure_step extends restore_activity_struc
      */
     protected function define_structure() {
 
-        $paths = array();
+        $paths = [];
         $userinfo = $this->get_setting_value('userinfo');
 
         $paths[] = new restore_path_element('groupselect', '/activity/groupselect');

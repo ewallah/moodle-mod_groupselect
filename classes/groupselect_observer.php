@@ -48,7 +48,7 @@ class groupselect_observer {
         // Get user enrolment info from event.
         $cp = (object)$event->other['userenrolment'];
         if ($cp->lastenrol) {
-            if (!$groupselections = $DB->get_records('groupselect', array('course' => $cp->courseid), '', 'id')) {
+            if (!$groupselections = $DB->get_records('groupselect', ['course' => $cp->courseid], '', 'id')) {
                 return;
             }
             list($groupselect, $params) = $DB->get_in_or_equal(array_keys($groupselections), SQL_PARAMS_NAMED);

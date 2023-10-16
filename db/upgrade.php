@@ -84,7 +84,7 @@ function xmldb_groupselect_upgrade($oldversion) {
             $dbman->add_field($table, $field);
         }
 
-        $DB->set_field('groupselect', 'introformat', FORMAT_HTML, array());
+        $DB->set_field('groupselect', 'introformat', FORMAT_HTML, []);
 
         // Groupselect savepoint reached.
         upgrade_mod_savepoint(true, 2010010100, 'groupselect');
@@ -149,7 +149,7 @@ function xmldb_groupselect_upgrade($oldversion) {
         $table->add_field('groupid', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, null, 'id');
         $table->add_field('password', XMLDB_TYPE_CHAR, '60', null, XMLDB_NOTNULL, null, null, 'groupid');
         $table->add_field('instance_id', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, null, 'password');
-        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
 
         if (!$dbman->table_exists($table)) {
             $dbman->create_table($table);
@@ -161,7 +161,7 @@ function xmldb_groupselect_upgrade($oldversion) {
         $table->add_field('groupid', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, null, 'id');
         $table->add_field('teacherid', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, null, 'groupid');
         $table->add_field('instance_id', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, null, 'teacherid');
-        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
 
         if (!$dbman->table_exists($table)) {
             $dbman->create_table($table);
@@ -190,12 +190,12 @@ function xmldb_groupselect_upgrade($oldversion) {
             $gsteachers = $DB->get_records('groupselect_groups_teachers');
 
             foreach ($gsteachers as $gsteacher) {
-                $coursemodule = $DB->get_record('course_modules', array('id' => $gsteacher->instance_id));
+                $coursemodule = $DB->get_record('course_modules', ['id' => $gsteacher->instance_id]);
                 if (isset($coursemodule->instance)) {
                     $gsteacher->instance_id = $coursemodule->instance;
                     $DB->update_record('groupselect_groups_teachers', $gsteacher, $bulk = false);
                 } else {
-                    $DB->delete_records('groupselect_groups_teachers', array('id' => $gsteacher->id));
+                    $DB->delete_records('groupselect_groups_teachers', ['id' => $gsteacher->id]);
                 }
             }
         }
@@ -206,7 +206,7 @@ function xmldb_groupselect_upgrade($oldversion) {
     if ($oldversion < 2016060603) {
 
         // Update module settings table.
-        $fields = array();
+        $fields = [];
         $table = new xmldb_table('groupselect');
         $fields[] = new xmldb_field('studentcansetenrolmentkey', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL,
             null, '0', 'showassignedteacher');
@@ -225,7 +225,7 @@ function xmldb_groupselect_upgrade($oldversion) {
     if ($oldversion < 2016061100) {
 
         // Update module settings table.
-        $fields = array();
+        $fields = [];
         $table = new xmldb_table('groupselect');
         $fields[] = new xmldb_field('notifyexpiredselection', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL,
             null, '1', 'studentcansetgroupname');
@@ -243,9 +243,9 @@ function xmldb_groupselect_upgrade($oldversion) {
     if ($oldversion < 2017061205) {
 
         // Get default teacher role.
-        $teacherrole = $DB->get_record( 'role', array (
-            'shortname' => "teacher"
-        ), '*', IGNORE_MISSING );
+        $teacherrole = $DB->get_record( 'role',  [
+            'shortname' => "teacher",
+        ], '*', IGNORE_MISSING );
 
         if (empty($teacherrole)) {
             $teacherroleid = 4;
@@ -254,7 +254,7 @@ function xmldb_groupselect_upgrade($oldversion) {
         }
 
         // Update module settings table.
-        $fields = array();
+        $fields = [];
         $table = new xmldb_table('groupselect');
         $fields[] = new xmldb_field('supervisionrole', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL,
             null, $teacherroleid, 'notifyexpiredselection');
@@ -271,7 +271,7 @@ function xmldb_groupselect_upgrade($oldversion) {
     if ($oldversion < 2017061302) {
 
         // Update module settings table.
-        $fields = array();
+        $fields = [];
         $table = new xmldb_table('groupselect');
         $fields[] = new xmldb_field('maxgroupmembership', XMLDB_TYPE_INTEGER, 10, null, XMLDB_NOTNULL,
             null, '1', 'supervisionrole');
@@ -289,7 +289,7 @@ function xmldb_groupselect_upgrade($oldversion) {
     if ($oldversion < 2018031606) {
 
         // Update module settings table.
-        $fields = array();
+        $fields = [];
         $table = new xmldb_table('groupselect');
         $fields[] = new xmldb_field('studentcanjoin', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL,
             null, '1', 'maxgroupmembership');
@@ -303,9 +303,9 @@ function xmldb_groupselect_upgrade($oldversion) {
         }
         // Update default capabilities for teacher, editingteacher and manager.
         // Create, select and unselect groups.
-        $editingteacherroleid = $DB->get_field('role', 'id', array('shortname' => 'editingteacher'));
-        $teacherroleid = $DB->get_field('role', 'id', array('shortname' => 'teacher'));
-        $managerroleid = $DB->get_field('role', 'id', array('shortname' => 'manager'));
+        $editingteacherroleid = $DB->get_field('role', 'id', ['shortname' => 'editingteacher']);
+        $teacherroleid = $DB->get_field('role', 'id', ['shortname' => 'teacher']);
+        $managerroleid = $DB->get_field('role', 'id', ['shortname' => 'manager']);
         if (!empty($editingteacherroleid)) {
             role_change_permission($editingteacherroleid, context_system::instance(0),
                                     'mod/groupselect:create', CAP_ALLOW);
@@ -374,7 +374,7 @@ function xmldb_groupselect_upgrade($oldversion) {
         $dbman->change_field_precision($table, $field);
 
         // Update module settings table.
-        $fields = array();
+        $fields = [];
         $fields[] = new xmldb_field('hidesuspendedstudents', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL,
             null, '0', 'hidefullgroups');
         $fields[] = new xmldb_field('hidegroupmembers', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL,

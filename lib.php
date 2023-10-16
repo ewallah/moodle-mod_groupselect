@@ -72,7 +72,7 @@ function groupselect_supports($feature) {
  * @return array
  */
 function groupselect_get_extra_capabilities() {
-    return array('moodle/site:accessallgroups', 'moodle/site:viewfullnames');
+    return ['moodle/site:accessallgroups', 'moodle/site:viewfullnames'];
 }
 
 /**
@@ -84,7 +84,7 @@ function groupselect_get_extra_capabilities() {
 function groupselect_get_groupselect($groupselectid) {
     global $DB;
 
-    if ($groupselect = $DB->get_record("groupselect", array("id" => $groupselectid))) {
+    if ($groupselect = $DB->get_record("groupselect", ["id" => $groupselectid])) {
         return $groupselect;
     }
     return false;
@@ -150,11 +150,11 @@ function groupselect_update_instance($groupselect) {
 function groupselect_delete_instance($id) {
     global $DB;
     // Delete group password rows related to this instance (but not the groups).
-    $DB->delete_records('groupselect_passwords', array('instance_id' => $id));
+    $DB->delete_records('groupselect_passwords', ['instance_id' => $id]);
 
-    $DB->delete_records('groupselect_groups_teachers', array('instance_id' => $id));
+    $DB->delete_records('groupselect_groups_teachers', ['instance_id' => $id]);
 
-    $DB->delete_records('groupselect', array('id' => $id));
+    $DB->delete_records('groupselect', ['id' => $id]);
 
     return true;
 }
@@ -204,8 +204,8 @@ function groupselect_set_events($groupselect) {
     // Get old event.
     $oldevent = null;
     $oldevent = $DB->get_record('event',
-    array('modulename' => 'groupselect',
-        'instance' => $groupselect->id, 'eventtype' => GROUPSELECT_EVENT_TYPE_DUE));
+    ['modulename' => 'groupselect',
+        'instance' => $groupselect->id, 'eventtype' => GROUPSELECT_EVENT_TYPE_DUE, ]);
 
     if ($groupselect->timedue) {
         // Create calendar event.
@@ -261,7 +261,7 @@ function groupselect_get_participants($groupselectid) {
  * @return array
  */
 function groupselect_get_view_actions() {
-    return array('view', 'export');
+    return ['view', 'export'];
 }
 
 
@@ -271,7 +271,7 @@ function groupselect_get_view_actions() {
  * @return array
  */
 function groupselect_get_post_actions() {
-    return array('select', 'unselect', 'create', 'assign');
+    return ['select', 'unselect', 'create', 'assign'];
 }
 
 /**
@@ -285,7 +285,7 @@ function groupselect_get_post_actions() {
  * @param bool $forcedownload whether the user must be forced to download the file.
  * @param array $options additional options affecting the file serving
  */
-function groupselect_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
+function groupselect_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=[]) {
     // Check the contextlevel is as expected - if your plugin is a block, this becomes CONTEXT_BLOCK, etc.
     if ($context->contextlevel != CONTEXT_MODULE) {
         return false;
@@ -381,7 +381,7 @@ function mod_groupselect_core_calendar_provide_event_action(calendar_event $even
 
     return $factory->create_instance(
         get_string('selectgroupaction', 'groupselect'),
-        new \moodle_url('/mod/groupselect/view.php', array('id' => $cm->id)),
+        new \moodle_url('/mod/groupselect/view.php', ['id' => $cm->id]),
         $itmecount,
         $actionable
     );
@@ -422,7 +422,7 @@ function groupselect_extend_settings_navigation(settings_navigation $settingsnav
     // Add the navigation items.
     if (has_capability('moodle/course:managegroups', $context)) {
         $groupselectnode->add_node(navigation_node::create(get_string('groups'),
-            new moodle_url('/group/index.php', array('id' => $course->id)),
+            new moodle_url('/group/index.php', ['id' => $course->id]),
             navigation_node::TYPE_SETTING, null, 'mod_groupselect_groups',
             new pix_icon('i/group', '')), $beforekey);
     }
@@ -448,8 +448,8 @@ function groupselect_reset_course_form_definition(&$mform) {
  * @return array
  */
 function groupselect_reset_course_form_defaults($course) {
-    return array('reset_groupselect_passwords' => 1,
-            'reset_groupselect_supervisors' => 0);
+    return ['reset_groupselect_passwords' => 1,
+            'reset_groupselect_supervisors' => 0, ];
 }
 
 /**
@@ -462,29 +462,29 @@ function groupselect_reset_course_form_defaults($course) {
 function groupselect_reset_userdata($data) {
     global $DB;
 
-    $status = array();
-    $params = array();
+    $status = [];
+    $params = [];
 
     $componentstr = get_string('modulenameplural', 'mod_groupselect');
 
     if (!empty($data->reset_groupselect_passwords)) {
-        if ($groupselections = $DB->get_records('groupselect', array('course' => $data->courseid), '', 'id')) {
+        if ($groupselections = $DB->get_records('groupselect', ['course' => $data->courseid], '', 'id')) {
             list($groupselect, $params) = $DB->get_in_or_equal(array_keys($groupselections), SQL_PARAMS_NAMED);
             $DB->delete_records_select('groupselect_passwords', 'instance_id '.$groupselect, $params);
 
-            $status[] = array('component' => $componentstr,
+            $status[] = ['component' => $componentstr,
             'item' => get_string('deleteallgrouppasswords', 'mod_groupselect'),
-            'error' => false);
+            'error' => false, ];
         }
     }
     if (!empty($data->reset_groupselect_supervisors)) {
-        if ($groupselections = $DB->get_records('groupselect', array('course' => $data->courseid), '', 'id')) {
+        if ($groupselections = $DB->get_records('groupselect', ['course' => $data->courseid], '', 'id')) {
             list($groupselect, $params) = $DB->get_in_or_equal(array_keys($groupselections), SQL_PARAMS_NAMED);
             $DB->delete_records_select('groupselect_groups_teachers', 'instance_id '.$groupselect, $params);
 
-            $status[] = array('component' => $componentstr,
+            $status[] = ['component' => $componentstr,
             'item' => get_string('removeallsupervisors', 'mod_groupselect'),
-            'error' => false);
+            'error' => false, ];
         }
     }
 
@@ -507,10 +507,10 @@ function groupselect_view($groupselect, $course, $cm, $context) {
     $completion->set_module_viewed($cm);
 
     // Trigger course_module_viewed event.
-    $params = array(
+    $params = [
         'context' => $context,
-        'objectid' => $groupselect->id
-    );
+        'objectid' => $groupselect->id,
+    ];
 
     $event = \mod_groupselect\event\course_module_viewed::create($params);
     $event->add_record_snapshot('course_modules', $cm);

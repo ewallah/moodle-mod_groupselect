@@ -85,9 +85,9 @@ class select_form extends moodleform {
             $sql = "SELECT  g.password
                                   FROM    {groupselect_passwords} g
                                  WHERE   g.groupid = ?";
-            $params = array (
-                    'id' => $data['select']
-            );
+            $params = [
+                    'id' => $data['select'],
+            ];
             $password = $DB->get_record_sql( $sql, $params )->password;
 
             if (! password_verify( $data['password'], $password )) {

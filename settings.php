@@ -34,7 +34,7 @@ if ($ADMIN->fulltree) {
         get_string('condifmodeditdefaults', 'admin')));
 
     $configroles = role_get_names(context_system::instance(), ROLENAME_ALIAS, true);
-    $neteacher = $DB->get_record( 'role', array('shortname' => "teacher"), '*');
+    $neteacher = $DB->get_record( 'role', ['shortname' => "teacher"], '*');
     $setid = ($neteacher) ? $neteacher->id : 4;
 
     $settings->add(new admin_setting_configtext('groupselect/minmembers',

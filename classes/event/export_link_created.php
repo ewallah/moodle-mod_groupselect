@@ -59,7 +59,7 @@ class export_link_created extends \core\event\base {
      * Gets the URL
      */
     public function get_url() {
-        return new \moodle_url('/mod/groupselect/view.php', array('id' => $this->contextinstanceid));
+        return new \moodle_url('/mod/groupselect/view.php', ['id' => $this->contextinstanceid]);
     }
 
 }

@@ -49,7 +49,7 @@ class mod_groupselect_mod_form extends moodleform_mod {
         $config = get_config('groupselect');
 
         $mform->addElement('header', 'general', get_string('general', 'form'));
-        $mform->addElement('text', 'name', get_string('name'), array('size' => '48'));
+        $mform->addElement('text', 'name', get_string('name'), ['size' => '48']);
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {
@@ -61,7 +61,7 @@ class mod_groupselect_mod_form extends moodleform_mod {
 
         // -------------------------------------------------------
 
-        $options = array();
+        $options = [];
         $options[0] = get_string('fromallgroups', 'mod_groupselect');
         if ($groupings = groups_get_all_groupings($COURSE->id)) {
             foreach ($groupings as $grouping) {
@@ -73,23 +73,23 @@ class mod_groupselect_mod_form extends moodleform_mod {
         $supervisionroles = role_get_names(context_system::instance(), ROLENAME_ALIAS, true);
 
         $mform->addElement('date_time_selector', 'timeavailable', get_string('timeavailable', 'mod_groupselect'),
-                            array('optional' => true));
+                            ['optional' => true]);
         $mform->setDefault('timeavailable', 0);
-        $mform->addElement('date_time_selector', 'timedue', get_string('timedue', 'mod_groupselect'), array('optional' => true));
+        $mform->addElement('date_time_selector', 'timedue', get_string('timedue', 'mod_groupselect'), ['optional' => true]);
         $mform->setDefault('timedue', 0);
         $mform->addElement('select', 'targetgrouping', get_string('targetgrouping', 'mod_groupselect'), $options);
         // Min. members.
-        $mform->addElement('text', 'minmembers', get_string('minmembers', 'mod_groupselect'), array('size' => '4'));
+        $mform->addElement('text', 'minmembers', get_string('minmembers', 'mod_groupselect'), ['size' => '4']);
         $mform->setType('minmembers', PARAM_INT);
         $mform->setDefault('minmembers', $config->minmembers);
         $mform->addHelpButton('minmembers', 'minmembers', 'mod_groupselect');
         // Max. members.
-        $mform->addElement('text', 'maxmembers', get_string('maxmembers', 'mod_groupselect'), array('size' => '4'));
+        $mform->addElement('text', 'maxmembers', get_string('maxmembers', 'mod_groupselect'), ['size' => '4']);
         $mform->setType('maxmembers', PARAM_INT);
         $mform->setDefault('maxmembers', $config->maxmembers);
         $mform->addHelpButton('maxmembers', 'maxmembers', 'mod_groupselect');
         // Multi group selection.
-        $mform->addElement('text', 'maxgroupmembership', get_string('maxgroupmembership', 'mod_groupselect'), array('size' => '4'));
+        $mform->addElement('text', 'maxgroupmembership', get_string('maxgroupmembership', 'mod_groupselect'), ['size' => '4']);
         $mform->setType('maxgroupmembership', PARAM_INT);
         $mform->setDefault('maxgroupmembership', $config->maxgroupmembership);
         $mform->addHelpButton('maxgroupmembership', 'maxgroupmembership', 'mod_groupselect');
@@ -100,33 +100,33 @@ class mod_groupselect_mod_form extends moodleform_mod {
         $mform->setExpanded('permissions', true);
         // Join.
         $mform->addElement('advcheckbox', 'studentcanjoin', get_string('studentcanjoin', 'mod_groupselect'), '',
-                array('optional' => true, 'group' => null), array(0, 1));
+                ['optional' => true, 'group' => null], [0, 1]);
         $mform->addHelpButton('studentcanjoin', 'studentcanjoin', 'mod_groupselect');
         $mform->setDefault('studentcanjoin', $config->studentcanjoin);
         // Leave.
         $mform->addElement('advcheckbox', 'studentcanleave', get_string('studentcanleave', 'mod_groupselect'), '',
-                array('optional' => true, 'group' => null), array(0, 1));
+                ['optional' => true, 'group' => null], [0, 1]);
         $mform->addHelpButton('studentcanleave', 'studentcanleave', 'mod_groupselect');
         $mform->setDefault('studentcanleave', $config->studentcanleave);
         // Create.
         $mform->addElement('advcheckbox', 'studentcancreate', get_string('studentcancreate', 'mod_groupselect'), '',
-                array('optional' => true, 'group' => null), array(0, 1));
+                ['optional' => true, 'group' => null], [0, 1]);
         $mform->addHelpButton('studentcancreate', 'studentcancreate', 'mod_groupselect');
         $mform->setDefault('studentcancreate', $config->studentcancreate);
         // Group name.
         $mform->addElement('advcheckbox', 'studentcansetgroupname', get_string('studentcansetgroupname', 'mod_groupselect'), '',
-                array('optional' => true, 'group' => null), array(0, 1));
+                ['optional' => true, 'group' => null], [0, 1]);
         $mform->addHelpButton('studentcansetgroupname', 'studentcansetgroupname', 'mod_groupselect');
         $mform->setDefault('studentcansetgroupname', $config->studentcansetgroupname);
         $mform->disabledIf('studentcansetgroupname', 'studentcancreate', 'notchecked');
         // Group description.
         $mform->addElement('advcheckbox', 'studentcansetdesc', get_string('studentcansetdesc', 'mod_groupselect'), '',
-                            array('optional' => true, 'group' => null), array(0, 1));
+                            ['optional' => true, 'group' => null], [0, 1]);
         $mform->addHelpButton('studentcansetdesc', 'studentcansetdesc', 'mod_groupselect');
         $mform->setDefault('studentcansetdesc', $config->studentcansetdesc);
         // Enroll password.
         $mform->addElement('advcheckbox', 'studentcansetenrolmentkey', get_string('studentcansetenrolmentkey', 'mod_groupselect'),
-                            '', array('optional' => true, 'group' => null), array(0, 1));
+                            '', ['optional' => true, 'group' => null], [0, 1]);
         $mform->addHelpButton('studentcansetenrolmentkey', 'studentcansetenrolmentkey', 'mod_groupselect');
         $mform->setDefault('studentcansetenrolmentkey', $config->studentcansetenrolmentkey);
         $mform->disabledIf('studentcansetenrolmentkey', 'studentcancreate', 'notchecked');
@@ -137,7 +137,7 @@ class mod_groupselect_mod_form extends moodleform_mod {
         $mform->setExpanded('miscellaneous', true);
         // Assign supervisor.
         $mform->addElement('advcheckbox', 'assignteachers', get_string('assigngroup', 'mod_groupselect'), '',
-                array('optional' => true, 'group' => null), array(0, 1));
+                ['optional' => true, 'group' => null], [0, 1]);
         $mform->addHelpButton('assignteachers', 'assigngroup', 'mod_groupselect');
         $mform->setDefault('assignteachers', $config->assignteachers);
         // Supervisor role.
@@ -146,33 +146,33 @@ class mod_groupselect_mod_form extends moodleform_mod {
         $mform->addHelpButton('supervisionrole', 'supervisionrole', 'mod_groupselect');
         // Show supervisor.
         $mform->addElement('advcheckbox', 'showassignedteacher', get_string('showassignedteacher', 'mod_groupselect'), '',
-                array('optional' => true, 'group' => null), array(0, 1));
+                ['optional' => true, 'group' => null], [0, 1]);
         $mform->addHelpButton('showassignedteacher', 'showassignedteacher', 'mod_groupselect');
         $mform->setDefault('showassignedteacher', $config->showassignedteacher);
         $mform->disabledIf('showassignedteacher', 'assignteachers', 'notchecked');
         // Hide full group.
         $mform->addElement('advcheckbox', 'hidefullgroups', get_string('hidefullgroups', 'mod_groupselect'), '',
-                array('optional' => true, 'group' => null), array(0, 1));
+                ['optional' => true, 'group' => null], [0, 1]);
         $mform->addHelpButton('hidefullgroups', 'hidefullgroups', 'mod_groupselect');
         $mform->setDefault('hidefullgroups', $config->hidefullgroups);
         // Hide suspended students.
         $mform->addElement('advcheckbox', 'hidesuspendedstudents', get_string('hidesuspendedstudents', 'mod_groupselect'), '',
-                array('optional' => true, 'group' => null), array(0, 1));
+                ['optional' => true, 'group' => null], [0, 1]);
         $mform->addHelpButton('hidesuspendedstudents', 'hidesuspendedstudents', 'mod_groupselect');
         $mform->setDefault('hidesuspendedstudents', $config->hidesuspendedstudents);
         // Hide group members.
         $mform->addElement('advcheckbox', 'hidegroupmembers', get_string('hidegroupmembers', 'mod_groupselect'), '',
-                array('optional' => true, 'group' => null), array(0, 1));
+                ['optional' => true, 'group' => null], [0, 1]);
         $mform->addHelpButton('hidegroupmembers', 'hidegroupmembers', 'mod_groupselect');
         $mform->setDefault('hidegroupmembers', $config->hidegroupmembers);
         // Notify expired group selection.
         $mform->addElement('advcheckbox', 'notifyexpiredselection', get_string('notifyexpiredselection', 'mod_groupselect'), '',
-                array('optional' => true, 'group' => null), array(0, 1));
+                ['optional' => true, 'group' => null], [0, 1]);
         $mform->addHelpButton('notifyexpiredselection', 'notifyexpiredselection', 'mod_groupselect');
         $mform->setDefault('notifyexpiredselection', $config->notifyexpiredselection);
         // Delete empty groups.
         $mform->addElement('advcheckbox', 'deleteemptygroups', get_string('deleteemptygroups', 'mod_groupselect'), '',
-                array('optional' => true, 'group' => null), array(0, 1));
+                ['optional' => true, 'group' => null], [0, 1]);
         $mform->addHelpButton('deleteemptygroups', 'deleteemptygroups', 'mod_groupselect');
         $mform->setDefault('deleteemptygroups', $config->deleteemptygroups);
 

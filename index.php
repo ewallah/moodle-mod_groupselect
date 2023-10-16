@@ -27,13 +27,13 @@ require('../../config.php');
 // Course id.
 $id = required_param('id', PARAM_INT);
 
-$course = $DB->get_record('course', array('id' => $id), '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $id], '*', MUST_EXIST);
 
 require_course_login($course, true);
 $PAGE->set_pagelayout('incourse');
 
-\mod_groupselect\event\course_module_instance_list_viewed::create(array('context' =>
-    context_course::instance($course->id)))->trigger();
+\mod_groupselect\event\course_module_instance_list_viewed::create(['context' =>
+    context_course::instance($course->id), ])->trigger();
 
 $strgroupselect  = get_string('modulename', 'mod_groupselect');
 $strgroupselects = get_string('modulenameplural', 'mod_groupselect');
@@ -42,7 +42,7 @@ $strname         = get_string('name');
 $strintro        = get_string('moduleintro');
 $strlastmodified = get_string('lastmodified');
 
-$PAGE->set_url('/mod/groupselect/index.php', array('id' => $course->id));
+$PAGE->set_url('/mod/groupselect/index.php', ['id' => $course->id]);
 $PAGE->set_title($course->shortname.': '.$strgroupselects);
 $PAGE->set_heading($course->fullname);
 $PAGE->navbar->add($strgroupselects);
@@ -62,11 +62,11 @@ $table = new html_table();
 $table->attributes['class'] = 'generaltable mod_index';
 
 if ($usesections) {
-    $table->head  = array ($strsectionname, $strname, $strintro);
-    $table->align = array ('center', 'left', 'left');
+    $table->head  = [$strsectionname, $strname, $strintro];
+    $table->align = ['center', 'left', 'left'];
 } else {
-    $table->head  = array ($strlastmodified, $strname, $strintro);
-    $table->align = array ('left', 'left', 'left');
+    $table->head  = [$strlastmodified, $strname, $strintro];
+    $table->align = ['left', 'left', 'left'];
 }
 
 $modinfo = get_fast_modinfo($course);
@@ -90,10 +90,10 @@ foreach ($groupselects as $groupselect) {
 
     $class = $groupselect->visible ? '' : 'class="dimmed"'; // Hidden modules are dimmed.
 
-    $table->data[] = array (
+    $table->data[] = [
         $printsection,
         "<a $class href=\"view.php?id=$cm->id\">".format_string($groupselect->name)."</a>",
-        format_module_intro('groupselect', $groupselect, $cm->id));
+        format_module_intro('groupselect', $groupselect, $cm->id), ];
 }
 
 echo html_writer::table($table);

@@ -49,8 +49,8 @@ function groupselect_get_group_info($group) {
     }
     $options = new stdClass;
     $options->overflowdiv = true;
-    return format_text($group->description, $group->descriptionformat, array('filter' => false, 'overflowdiv' => true,
-        'context' => $context));
+    return format_text($group->description, $group->descriptionformat, ['filter' => false, 'overflowdiv' => true,
+        'context' => $context, ]);
 }
 
 /**
@@ -101,7 +101,7 @@ function groupselect_group_member_counts($cm, $targetgrouping=0, $hidesuspended 
                        $enrolsql
                        $andnotsuspended
               GROUP BY g.id";
-        $params = array('course' => $cm->course);
+        $params = ['course' => $cm->course];
 
     } else {
         $sql = "SELECT g.id, COUNT(gm.userid) AS usercount
@@ -113,7 +113,7 @@ function groupselect_group_member_counts($cm, $targetgrouping=0, $hidesuspended 
                        $enrolsql
                        $andnotsuspended
               GROUP BY g.id";
-        $params = array('course' => $cm->course, 'grouping' => $targetgrouping);
+        $params = ['course' => $cm->course, 'grouping' => $targetgrouping];
     }
 
     return $DB->get_records_sql($sql, $params);
@@ -131,8 +131,8 @@ function groupselect_get_password_protected_groups($groupselect) {
             FROM    {groupselect_passwords} gp
             WHERE   gp.instance_id = ?";
 
-    $result = $DB->get_records_sql($sql, array($groupselect->id));
-    $ids = array();
+    $result = $DB->get_records_sql($sql, [$groupselect->id]);
+    $ids = [];
     foreach ($result as $r) {
         array_push($ids, $r->groupid);
     }
@@ -153,5 +153,5 @@ function groupselect_get_context_members_by_role($context, $roleid) {
                  WHERE  r.contextid = ?
                    AND    r.roleid = ?";
 
-    return $DB->get_records_sql($sql, array($context, $roleid));
+    return $DB->get_records_sql($sql, [$context, $roleid]);
 }
