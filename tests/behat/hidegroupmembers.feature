@@ -57,7 +57,7 @@ Feature: Setting to enable hiding of group members students.
     And I turn editing mode on
     And I add a "Group self-selection" to section "1" and I fill the form with:
       | Name        | Group self-selection       |
-      | Hide group members for students | 0      |
+      | Hide group members for students | 1      |
     And I log out
     And I log in as "student2"
     And I am on "Course 1" course homepage

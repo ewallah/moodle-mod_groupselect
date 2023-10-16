@@ -47,6 +47,9 @@ class create_form extends moodleform {
      */
     const GROUP_NAME_MAXLEN = 254;
 
+    /** @var stdClass groupselect */
+    protected $groupselect;
+
     /**
      * Definition of the form
      */

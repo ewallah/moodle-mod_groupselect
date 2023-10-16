@@ -42,7 +42,7 @@ class mod_groupselect_mod_form extends moodleform_mod {
      * Definition of the form
      */
     public function definition() {
-        global $CFG, $COURSE, $DB; // TODO: get rid of the sloppy $COURSE.
+        global $CFG, $COURSE; // TODO: get rid of the sloppy $COURSE.
 
         $mform = $this->_form;
 
@@ -69,7 +69,6 @@ class mod_groupselect_mod_form extends moodleform_mod {
             }
         }
 
-        $roles = $DB->get_records("role");
         $supervisionroles = role_get_names(context_system::instance(), ROLENAME_ALIAS, true);
 
         $mform->addElement('date_time_selector', 'timeavailable', get_string('timeavailable', 'mod_groupselect'),
