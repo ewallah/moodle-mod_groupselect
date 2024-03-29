@@ -36,8 +36,7 @@ Feature: Setting to enable hiding of group members students.
       | moodle/course:viewparticipants | Allow |
     And I am on site homepage
     And I follow "Course 1"
-    And I turn editing mode on
-    And I add a "Group self-selection" to section "1" and I fill the form with:
+    And I add a groupselect activity to course "Course 1" section "1" and I fill the form with:
       | Name        | Group self-selection       |
       | Hide group members for students | 0      |
     And I log out
@@ -54,8 +53,7 @@ Feature: Setting to enable hiding of group members students.
       | moodle/course:viewparticipants | Prevent |
     And I am on site homepage
     And I follow "Course 1"
-    And I turn editing mode on
-    And I add a "Group self-selection" to section "1" and I fill the form with:
+    And I add a groupselect activity to course "Course 1" section "1" and I fill the form with:
       | Name        | Group self-selection       |
       | Hide group members for students | 1      |
     And I log out
@@ -72,8 +70,7 @@ Feature: Setting to enable hiding of group members students.
       | moodle/course:viewparticipants | Allow |
     And I am on site homepage
     And I follow "Course 1"
-    And I turn editing mode on
-    And I add a "Group self-selection" to section "1" and I fill the form with:
+    And I add a groupselect activity to course "Course 1" section "1" and I fill the form with:
       | Name        | Group self-selection       |
       | Hide group members for students | 1      |
     And I log out

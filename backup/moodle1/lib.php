@@ -29,7 +29,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class moodle1_mod_groupselect_handler extends moodle1_mod_handler {
-
     /** @var moodle1_file_manager */
     protected $fileman = null;
 
@@ -52,13 +51,15 @@ class moodle1_mod_groupselect_handler extends moodle1_mod_handler {
      */
     public function get_paths() {
         return [
-            new convert_path('groupselect', '/MOODLE_BACKUP/COURSE/MODULES/MOD/GROUPSELECT',
-                    [
+            new convert_path(
+                'groupselect',
+                '/MOODLE_BACKUP/COURSE/MODULES/MOD/GROUPSELECT',
+                [
                         'newfields' => [
                             'introformat' => FORMAT_MOODLE,
                         ],
                     ]
-                ),
+            ),
         ];
     }
 

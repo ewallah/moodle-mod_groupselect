@@ -31,7 +31,6 @@ namespace mod_groupselect\event;
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 class export_link_created extends \core\event\base {
-
     /**
      * Initialisation
      */
@@ -61,5 +60,4 @@ class export_link_created extends \core\event\base {
     public function get_url() {
         return new \moodle_url('/mod/groupselect/view.php', ['id' => $this->contextinstanceid]);
     }
-
 }

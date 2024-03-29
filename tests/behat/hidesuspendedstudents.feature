@@ -29,12 +29,8 @@ Feature: Setting to enable hiding of suspended students.
   @javascript
   Scenario: Setting is off, suspended students will be visible.
     Given I log in as "admin"
-    And I am on site homepage
-    And I follow "Course 1"
-    And I turn editing mode on
-    And I add a "Group self-selection" to section "1" and I fill the form with:
+    And I add a groupselect activity to course "Course 1" section "1" and I fill the form with:
       | Name     | Group self-selection |
-    And I turn editing mode off
     And I log out
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
@@ -48,10 +44,7 @@ Feature: Setting to enable hiding of suspended students.
     And I navigate to "Plugins > Activity modules > Group self-selection" in site administration
     And I set the field "Hide suspended students" to "1"
     And I press "Save changes"
-    And I am on site homepage
-    Then I follow "Course 1"
-    And I turn editing mode on
-    And I add a "Group self-selection" to section "1" and I fill the form with:
+    And I add a groupselect activity to course "Course 1" section "1" and I fill the form with:
       | Name     | Group self-selection |
     And I turn editing mode off
     And I log out

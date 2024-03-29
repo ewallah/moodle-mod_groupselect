@@ -37,7 +37,6 @@ namespace mod_groupselect\event;
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 class group_teacher_added extends \core\event\base {
-
     /**
      * Initialisation
      */

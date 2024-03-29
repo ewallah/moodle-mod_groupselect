@@ -37,13 +37,13 @@ $PAGE->set_pagelayout('incourse');
 
 $strgroupselect  = get_string('modulename', 'mod_groupselect');
 $strgroupselects = get_string('modulenameplural', 'mod_groupselect');
-$strsectionname  = get_string('sectionname', 'format_'.$course->format);
+$strsectionname  = get_string('sectionname', 'format_' . $course->format);
 $strname         = get_string('name');
 $strintro        = get_string('moduleintro');
 $strlastmodified = get_string('lastmodified');
 
 $PAGE->set_url('/mod/groupselect/index.php', ['id' => $course->id]);
-$PAGE->set_title($course->shortname.': '.$strgroupselects);
+$PAGE->set_title($course->shortname . ': ' . $strgroupselects);
 $PAGE->set_heading($course->fullname);
 $PAGE->navbar->add($strgroupselects);
 echo $OUTPUT->header();
@@ -85,14 +85,14 @@ foreach ($groupselects as $groupselect) {
             $currentsection = $groupselect->section;
         }
     } else {
-        $printsection = '<span class="smallinfo">'.userdate($groupselect->timemodified)."</span>";
+        $printsection = '<span class="smallinfo">' . userdate($groupselect->timemodified) . "</span>";
     }
 
     $class = $groupselect->visible ? '' : 'class="dimmed"'; // Hidden modules are dimmed.
 
     $table->data[] = [
         $printsection,
-        "<a $class href=\"view.php?id=$cm->id\">".format_string($groupselect->name)."</a>",
+        "<a $class href=\"view.php?id=$cm->id\">" . format_string($groupselect->name) . "</a>",
         format_module_intro('groupselect', $groupselect, $cm->id), ];
 }
 

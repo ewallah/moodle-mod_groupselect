@@ -42,12 +42,18 @@ function groupselect_get_group_info($group) {
     $group = clone($group);
     $context = context_course::instance($group->courseid);
 
-    $group->description = file_rewrite_pluginfile_urls($group->description, 'pluginfile.php', $context->id, 'group',
-        'description', $group->id);
+    $group->description = file_rewrite_pluginfile_urls(
+        $group->description,
+        'pluginfile.php',
+        $context->id,
+        'group',
+        'description',
+        $group->id
+    );
     if (!isset($group->descriptionformat)) {
         $group->descriptionformat = FORMAT_MOODLE;
     }
-    $options = new stdClass;
+    $options = new stdClass();
     $options->overflowdiv = true;
     return format_text($group->description, $group->descriptionformat, ['filter' => false, 'overflowdiv' => true,
         'context' => $context, ]);
@@ -73,7 +79,7 @@ function groupselect_is_open($groupselect) {
  * @param bool $hidesuspended Whether to exclude suspended students
  * @return array of objects: [id] => object(->usercount ->id) where id is group id
  */
-function groupselect_group_member_counts($cm, $targetgrouping=0, $hidesuspended = false) {
+function groupselect_group_member_counts($cm, $targetgrouping = 0, $hidesuspended = false) {
     global $DB;
 
     // Join to the enrolment and user table to hide suspended students.
@@ -102,7 +108,6 @@ function groupselect_group_member_counts($cm, $targetgrouping=0, $hidesuspended 
                        $andnotsuspended
               GROUP BY g.id";
         $params = ['course' => $cm->course];
-
     } else {
         $sql = "SELECT g.id, COUNT(gm.userid) AS usercount
                   FROM {groups_members} gm
