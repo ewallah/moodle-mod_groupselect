@@ -19,10 +19,11 @@
  *
  * @package    mod_groupselect
  * @copyright  2018 HTW Chur Roger Barras
- * @copyright 2008-2011 Petr Skoda (http://skodak.org)
- * @copyright 2014 Tampere University of Technology, P. Pyykkönen (pirkka.pyykkonen ÄT tut.fi)
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright  2008-2011 Petr Skoda (http://skodak.org)
+ * @copyright  2014 Tampere University of Technology, P. Pyykkönen (pirkka.pyykkonen ÄT tut.fi)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 require('../../config.php');
 require_once('locallib.php');
 require_once('select_form.php');

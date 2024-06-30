@@ -51,9 +51,11 @@ class groupselect_observer {
                 return;
             }
             [$groupselect, $params] = $DB->get_in_or_equal(array_keys($groupselections), SQL_PARAMS_NAMED);
-            $params['userid'] = $cp->userid;
-
-            $DB->delete_records_select('groupselect_groups_teachers', 'teacherid = :userid AND instance_id ' . $groupselect, $params);
+            $DB->delete_records_select(
+                'groupselect_groups_teachers',
+                'teacherid = :userid AND instance_id ' . $groupselect,
+                ['userid' => $cp->userid]
+            );
         }
     }
 
@@ -69,9 +71,8 @@ class groupselect_observer {
         // NOTE: this has to be as fast as possible.
         $groupid = $event->objectid;
         if (isset($groupid)) {
-            $params['groupid'] = $groupid;
-            $DB->delete_records_select('groupselect_groups_teachers', 'groupid = :groupid', $params);
-            $DB->delete_records_select('groupselect_passwords', 'groupid = :groupid', $params);
+            $DB->delete_records_select('groupselect_groups_teachers', 'groupid = :groupid', ['groupid' => $groupid]);
+            $DB->delete_records_select('groupselect_passwords', 'groupid = :groupid', ['groupid' => $groupid]);
         }
     }
 }
