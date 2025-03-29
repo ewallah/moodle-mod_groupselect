@@ -51,10 +51,11 @@ class groupselect_observer {
                 return;
             }
             [$groupselect, $params] = $DB->get_in_or_equal(array_keys($groupselections), SQL_PARAMS_NAMED);
+            $params['userid'] = $cp->userid;
             $DB->delete_records_select(
                 'groupselect_groups_teachers',
                 'teacherid = :userid AND instance_id ' . $groupselect,
-                ['userid' => $cp->userid]
+                $params
             );
         }
     }
